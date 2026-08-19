@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="金融行业公众号、视频号文稿本地合规初筛工具">
+  <meta name="theme-color" content="#17365d">
+  <title>HUI的合规小测</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2317365d'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='34' font-family='Arial' font-weight='700' fill='white'%3EH%3C/text%3E%3C/svg%3E">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#detect" aria-label="返回文案检测">
+      <span class="brand-mark">H</span>
+      <span><strong>HUI的合规小测</strong><small>金融营销文稿本地合规初筛</small></span>
+    </a>
+    <div class="privacy-badge"><span class="status-dot"></span>文稿仅在本机处理</div>
+  </header>
+
+  <nav class="tabs" aria-label="主导航">
+    <button class="tab is-active" data-view="detect">文案检测</button>
+    <button class="tab" data-view="rules">变体规则</button>
+    <button class="tab" data-view="laws">法规依据</button>
+    <button class="tab" data-view="history">历史记录</button>
+  </nav>
+
+  <main>
+    <section id="detect" class="view is-active">
+      <div class="intro-row">
+        <div>
+          <p class="eyebrow">公众号 · 视频号 · 口播稿</p>
+          <h1>在发布前，先做一次文稿合规初筛</h1>
+          <p>检测红线表述、收益承诺、诱导用语及需结合上下文复核的内容。检测结果不替代法律意见或正式合规审查。</p>
+        </div>
+        <button id="sampleBtn" class="button button-ghost">载入演示文案</button>
+      </div>
+
+      <div class="legend" aria-label="风险颜色说明">
+        <span><i class="legend-dot red"></i><strong>红线禁用</strong> 必须修改</span>
+        <span><i class="legend-dot orange"></i><strong>高风险需审</strong> 核验依据与表述</span>
+        <span><i class="legend-dot yellow"></i><strong>场景限用</strong> 结合上下文复核</span>
+      </div>
+
+      <div class="workspace">
+        <section class="editor-card card">
+          <div class="card-header">
+            <div><h2>输入文稿</h2><p>建议不超过 5,000 字，超过不会截断。</p></div>
+            <span id="charCount" class="char-count">0 / 5000</span>
+          </div>
+          <textarea id="copyInput" spellcheck="false" placeholder="请粘贴公众号文章、视频号标题、简介或口播稿……" aria-label="待检测文稿"></textarea>
+          <div id="lengthWarning" class="inline-warning" hidden>文稿已超过建议长度，仍会继续检测，但浏览器处理速度可能下降。</div>
+          <div class="editor-actions">
+            <button id="clearBtn" class="button button-ghost">清空</button>
+            <div>
+              <button id="saveBtn" class="button button-secondary">保存到本机历史</button>
+              <button id="copyBtn" class="button button-primary">复制当前文稿</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="result-card card">
+          <div class="card-header">
+            <div><h2>检测标注预览</h2><p id="resultHint">输入文稿后自动检测；点击高亮词查看详情。</p></div>
+            <span id="overallRisk" class="risk-pill neutral">未检测</span>
+          </div>
+          <div class="metric-row" aria-label="检测计数">
+            <div class="metric red"><span id="redCount">0</span><small>红线禁用</small></div>
+            <div class="metric orange"><span id="orangeCount">0</span><small>高风险需审</small></div>
+            <div class="metric yellow"><span id="yellowCount">0</span><small>场景限用</small></div>
+          </div>
+          <div id="annotatedText" class="annotated-text empty">检测结果将在这里显示。</div>
+          <div id="structuralWarnings" class="structural-warnings" hidden></div>
+        </section>
+      </div>
+
+      <aside id="detailPanel" class="detail-panel" aria-live="polite" hidden>
+        <div class="detail-title-row">
+          <div><span id="detailRisk" class="risk-pill"></span><h3 id="detailTerm"></h3></div>
+          <button id="closeDetail" class="icon-button" aria-label="关闭详情">×</button>
+        </div>
+        <dl>
+          <div><dt>适用场景</dt><dd id="detailScene"></dd></div>
+          <div><dt>触发审核规则</dt><dd id="detailRule"></dd></div>
+          <div><dt>修改或处理建议</dt><dd id="detailAction"></dd></div>
+          <div><dt>法规依据</dt><dd id="detailSources"></dd></div>
+        </dl>
+      </aside>
+    </section>
+
+    <section id="rules" class="view">
+      <div class="page-heading"><p class="eyebrow">检测方法</p><h1>变体规则详情</h1><p>系统会在不上传原文的前提下，在浏览器内还原常见规避写法。变体或语义命中仅作初筛，必须人工复核。</p></div>
+      <div id="rulesGrid" class="rules-grid"></div>
+    </section>
+
+    <section id="laws" class="view">
+      <div class="page-heading"><p class="eyebrow">官方来源</p><h1>法规与监管依据</h1><p>链接指向官方监管或政府网站，便于后续核对。最后核验日期：2026-08-18。</p></div>
+      <div id="lawsList" class="laws-list"></div>
+    </section>
+
+    <section id="history" class="view">
+      <div class="page-heading history-heading">
+        <div><p class="eyebrow">仅本机可见</p><h1>历史记录</h1><p>记录保存在当前电脑的当前浏览器中，不会上传或跨设备同步。清理浏览器数据会删除记录。</p></div>
+        <button id="clearHistoryBtn" class="button button-danger">清空全部历史</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <footer>
+    <p>HUI的合规小测 · 机器初筛结果不替代正式合规、法律或监管判断</p>
+    <p class="copyright-notice">“HUI的合规小测”的网站界面、程序代码、检测逻辑、词库分类体系、规则说明及内容编排由HUI独立整理与制作。未经授权，不得复制、修改、出售、镜像部署或用于其他商业用途。</p>
+  </footer>
+
+  <script src="compliance-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+
