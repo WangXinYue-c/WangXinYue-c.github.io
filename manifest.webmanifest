@@ -1,0 +1,11 @@
+{
+  "name": "HUI的合规小测",
+  "short_name": "HUI合规小测",
+  "description": "金融行业公众号、视频号文稿本地合规初筛工具",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#17365d",
+  "lang": "zh-CN"
+}
+
